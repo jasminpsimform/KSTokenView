@@ -54,7 +54,7 @@ open class KSToken : UIControl {
    open var tokenTextColor = UIColor(red: 255/255, green: 255/255, blue: 255/255, alpha: 1)
    
    /// Token background color
-   open var tokenBackgroundColor = UIColor(red: 50/255, green: 50/255, blue: 255/255, alpha: 1)
+    open var tokenBackgroundColor = UIColor.clear
    
    /// Token title color in selected state
    open var tokenTextHighlightedColor: UIColor?
@@ -72,7 +72,7 @@ open class KSToken : UIControl {
    open var borderColor: UIColor = UIColor.black
    
    /// default is 200. Maximum width of token. After maximum limit is reached title is truncated at end with '...'
-   fileprivate var _maxWidth: CGFloat? = 200
+   fileprivate var _maxWidth: CGFloat? = 300
    open var maxWidth: CGFloat {
       get{
          return _maxWidth!

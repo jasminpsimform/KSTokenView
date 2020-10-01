@@ -99,10 +99,10 @@ open class KSTokenView: UIView {
    fileprivate var _searchTableView: UITableView = UITableView(frame: .zero, style: UITableView.Style.plain)
    fileprivate var _resultArray = [AnyObject]()
    fileprivate var _showingSearchResult = false
-   fileprivate var _indicator = UIActivityIndicatorView(style: UIActivityIndicatorView.Style.gray)
+    fileprivate var _indicator = UIActivityIndicatorView(activityIndicatorStyle: UIActivityIndicatorView.Style.gray)
    fileprivate var _searchResultHeight: CGFloat = 200.0
    fileprivate var _lastSearchString: String = ""
-   fileprivate var _intrinsicContentHeight: CGFloat = UIView.noIntrinsicMetric
+    fileprivate var _intrinsicContentHeight: CGFloat = UIViewNoIntrinsicMetric
    
    //MARK: - Public Properties
    //__________________________________________________________________________________
@@ -164,7 +164,7 @@ open class KSTokenView: UIView {
    }
    
    /// Default is whiteColor()
-   @objc open var searchResultBackgroundColor: UIColor = UIColor.white {
+   @objc open var searchResultBackgroundColor: UIColor = UIColor.clear {
       didSet {
          _searchTableView.backgroundColor = searchResultBackgroundColor
       }
@@ -219,7 +219,7 @@ open class KSTokenView: UIView {
    }
    
    /// default is 5.0. Vertical margin between tokens
-   @objc open var marginY: CGFloat = 5.0 {
+   @objc open var marginY: CGFloat = 10.0 {
       didSet {
          if (oldValue != marginY) {
             _updateTokenField()
@@ -388,7 +388,7 @@ open class KSTokenView: UIView {
       backgroundColor = UIColor.clear
       clipsToBounds = true
       _tokenField = KSTokenField(frame: CGRect(x: 0, y: 0, width: self.bounds.width, height: self.bounds.height))
-      _tokenField.textColor = UIColor.black
+      _tokenField.textColor = UIColor.white
       _tokenField.isEnabled = true
       _tokenField.tokenFieldDelegate = self
       _tokenField.placeholder = ""
@@ -402,9 +402,10 @@ open class KSTokenView: UIView {
       _indicator.color = activityIndicatorColor
     
       _searchTableView.frame = CGRect(x: 0, y: frame.height, width: frame.width, height: _searchResultHeight)
+    _searchTableView.backgroundColor = .clear
       _searchTableView.delegate = self
       _searchTableView.dataSource = self
-      
+    _searchTableView.tableFooterView = UIView()
       _hideSearchResults()
       _intrinsicContentHeight = _tokenField.bounds.height
       invalidateIntrinsicContentSize()
@@ -419,7 +420,7 @@ open class KSTokenView: UIView {
    }
    
     override open var intrinsicContentSize : CGSize {
-        return CGSize(width: UIView.noIntrinsicMetric, height: _intrinsicContentHeight)
+        return CGSize(width: UIViewNoIntrinsicMetric, height: _intrinsicContentHeight)
     }
     
     //MARK: - Public Methods
@@ -958,6 +959,8 @@ extension KSTokenView : UITableViewDataSource {
       }
       
       let title = delegate?.tokenView(self, displayTitleForObject: _resultArray[(indexPath as NSIndexPath).row])
+    cell?.backgroundColor = .clear
+    cell?.contentView.backgroundColor = .clear
       cell!.textLabel!.text = (title != nil) ? title : "No Title"
       cell!.selectionStyle = UITableViewCell.SelectionStyle.none
       return cell!
